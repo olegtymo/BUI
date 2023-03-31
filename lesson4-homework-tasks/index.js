@@ -1,18 +1,12 @@
 // #################################   TASK #1   ###################################
-const findCharInWord = (word, index, char) => {
-  if (word[(index -= 1)] !== char) {
-    return false;
-  } else return true;
-};
-
-findCharInWord('hello', 0, 'h');
+// const isCharInWord = (word, index, char) => {
+//   return word[(index -= 1)] === char;
+// };
 
 // #################################   TASK #2   ###################################
-const checkoutLength = (str, expectedLength) => {
-  if (str.length !== expectedLength) {
-    return false;
-  } else return true;
-};
+// const checkLength = (str, expectedLength) => {
+//   return str.length === expectedLength;
+// };
 
 // #################################   TASK #3   ###################################
 let arr = ['house', 'color', 'game', 'car', 'museum'];
@@ -24,28 +18,36 @@ function createRandElement(arr) {
 
 let randWord = createRandElement(arr);
 console.log(randWord);
+const guessedLetter = (randWord, letterFromUser) => {
+  let string = '_'.repeat(randWord.length);
+  let updatedString = '';
+
+  for (let i = 0; i < randWord.length - 1; i++) {
+    if (randWord[i] === letterFromUser) {
+      updatedString += randWord[i];
+    }
+    updatedString += `${string[i]} `;
+  }
+  return updatedString;
+};
 
 function isCompatible(letterFromUser, randWord) {
   let lowCaseLetter = letterFromUser.toLowerCase();
   let lowCaseWord = randWord.toLowerCase();
   console.log(lowCaseWord.indexOf(lowCaseLetter));
-
   let mistakesCounter = 0;
-  while (mistakesCounter < 4) {
-    // if (lowCaseLetter === lowCaseWord) {
-    //   return alert('Fantastic! You won!');
-    // }
-    for (let i = 0; i <= mistakesCounter; i++) {
-      if (lowCaseWord.indexOf(lowCaseLetter) === -1) {
-        let refuse = alert(`Nope, try again!`);
-        letterFromUser = prompt('Type letter in again!');
-        mistakesCounter++;
-        console.log(mistakesCounter);
-        if (mistakesCounter === 4) {
-          return alert('Game over');
-        }
-        // letterFromUser = prompt('Type letter in again!');
-      }
+
+  while (lowCaseWord.indexOf(lowCaseLetter) === -1 && mistakesCounter < 3) {
+    mistakesCounter++;
+    letterFromUser = prompt(`Nope, try again! You have ${4 - mistakesCounter} attempts`);
+    console.log(`Counter:${mistakesCounter}`);
+  }
+  if (letterFromUser === randWord) {
+    return alert('Good game! You won!');
+  }
+  while (letterFromUser === randWord || mistakesCounter === 4) {
+    if (lowCaseWord.indexOf(lowCaseLetter) >= 0) {
+      letterFromUser = prompt(`Nice! You have guessed`, guessedLetter(randWord, letterFromUser));
     }
   }
 }
