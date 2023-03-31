@@ -45,10 +45,9 @@ function isCompatible(letterFromUser, randWord) {
   if (letterFromUser === randWord) {
     return alert('Good game! You won!');
   }
-  while (letterFromUser === randWord || mistakesCounter === 4) {
-    if (lowCaseWord.indexOf(lowCaseLetter) >= 0) {
-      letterFromUser = prompt(`Nice! You have guessed`, guessedLetter(randWord, letterFromUser));
-    }
+
+  if (lowCaseWord.indexOf(lowCaseLetter) >= 0) {
+    letterFromUser = prompt(`Nice! You have guessed`, guessedLetter(randWord, letterFromUser));
   }
 }
 
