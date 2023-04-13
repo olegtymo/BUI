@@ -1,3 +1,11 @@
+//####################################################################   TASK1   #############################################################################
+const findChar = (word, index, char) => word[index] === char;
+
+//####################################################################   TASK2   #############################################################################
+const argLength = (str, expectedLength) => str.length === expectedLength;
+
+//####################################################################   TASK3   #############################################################################
+
 const words = ['house', 'color', 'game', 'car', 'museum'];
 
 function getRandomWord(words) {
@@ -21,7 +29,7 @@ function init() {
     }
 
     if (!validateInput(guess)) {
-      alert('Please enter a single letter!');
+      alert('Please enter a letter in english!');
       continue;
     }
 
