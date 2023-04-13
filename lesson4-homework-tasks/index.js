@@ -1,71 +1,65 @@
-// #################################   TASK #1   ###################################
-// const isCharInWord = (word, index, char) => {
-//   return word[(index -= 1)] === char;
-// };
+const words = ['house', 'color', 'game', 'car', 'museum'];
 
-// #################################   TASK #2   ###################################
-// const checkLength = (str, expectedLength) => {
-//   return str.length === expectedLength;
-// };
+function getRandomWord(words) {
+  return words[Math.floor(Math.random() * words.length)];
+}
 
-// #################################   TASK #3   ###################################
-// let arr = ['house', 'color', 'game', 'car', 'museum'];
+function validateInput(input) {
+  return /^[a-zA-Z]+$/.test(input);
+}
 
-// function createRandElement(arr) {
-//   let rand = Math.floor(Math.random() * arr.length);
-//   return arr[rand];
-// }
+function init() {
+  let attemptsLeft = 4;
+  const word = getRandomWord(words);
+  let guessedWord = '_'.repeat(word.length);
 
-// let randWord = createRandElement(arr);
-// console.log(randWord);
-// const guessedLetter = (randWord, letterFromUser) => {
-//   let string = '_'.repeat(randWord.length);
-//   let updatedString = '';
+  while (attemptsLeft > 0 && guessedWord !== word) {
+    const guess = prompt(`Guess a letter (${attemptsLeft} attempts left):\n\n${guessedWord}`);
 
-//   for (let i = 0; i < randWord.length - 1; i++) {
-//     if (randWord[i] === letterFromUser) {
-//       updatedString += randWord[i];
-//     }
-//     updatedString += `${string[i]} `;
-//   }
-//   return updatedString;
-// };
+    if (guess === null) {
+      return;
+    }
 
-// function isCompatible(letterFromUser, randWord) {
-//   let lowCaseLetter = letterFromUser.toLowerCase();
-//   let lowCaseWord = randWord.toLowerCase();
-//   console.log(lowCaseWord.indexOf(lowCaseLetter));
-//   let mistakesCounter = 0;
+    if (!validateInput(guess)) {
+      alert('Please enter a single letter!');
+      continue;
+    }
 
-//   while (lowCaseWord.indexOf(lowCaseLetter) === -1 && mistakesCounter < 3) {
-//     mistakesCounter++;
-//     letterFromUser = prompt(`Nope, try again! You have ${4 - mistakesCounter} attempts`);
-//     console.log(`Counter:${mistakesCounter}`);
-//   }
-//   if (letterFromUser === randWord) {
-//     return alert('Good game! You won!');
-//   }
+    let correctGuess = false;
 
-//   if (lowCaseWord.indexOf(lowCaseLetter) >= 0) {
-//     letterFromUser = prompt(`Nice! You have guessed`, guessedLetter(randWord, letterFromUser));
-//   }
-// }
+    let newGuessedWord = '';
+    for (let i = 0; i < word.length; i++) {
+      if (word[i].toLowerCase() === guess.toLowerCase()) {
+        newGuessedWord += word[i];
+        correctGuess = true;
+      } else {
+        newGuessedWord += guessedWord[i];
+      }
+    }
 
-// function validateUserInput(letterFromUser) {
-//   while (letterFromUser.toLowerCase() === letterFromUser.toUpperCase()) {
-//     letterFromUser = prompt('Invalid input!Only letters!');
-//   }
-//   isCompatible(letterFromUser, randWord);
-// }
+    if (correctGuess) {
+      guessedWord = newGuessedWord;
+      alert('Correct guess!');
+    } else {
+      attemptsLeft--;
+      alert(`Incorrect guess! ${attemptsLeft} attempts left.`);
+    }
+  }
 
-// const game = () => {
-//   let offerToGame = confirm('Do you want to play a game?');
-//   if (offerToGame === true) {
-//     let letterFromUser = prompt('Type letter in');
-//     validateUserInput(letterFromUser);
-//   }
-// };
+  if (guessedWord === word) {
+    alert(`Congratulations! You won!\nThe word was "${word}".`);
+  } else {
+    alert(`Game over!\nThe word was "${word}".`);
+  }
+}
 
-// game();
+const playGame = () => {
+  const play = confirm('Do you want to play a game?');
+  if (play) {
+    init();
+  } else {
+    alert('Ok, see you next time!');
+  }
+};
 
-
+playGame();
