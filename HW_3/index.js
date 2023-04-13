@@ -1,14 +1,4 @@
-// ######################################################################  TASK1  #########################################################################
-// function without(object, propertyName) {
-
-//      object[propertyName] = null;
-
-// }
-
-// const data = { login: 'gogi', password: 'GloryOfUkraine', address: 'Kiev' };
-// console.log(without(data, 'address')); // { login: 'gogi', password: 'GloryOfUkraine', address: null}
-
-// ######################################################################  TASK2  #########################################################################
+// ######################################################################  TASK  #########################################################################
 
 // /**
 //  *
@@ -43,10 +33,22 @@ const storageListItem = [
   new ItemCreator('Chips', 15, 12),
 ];
 
-function ProfileStore(label, schedule, products) {
+function ProfileStore(label, schedule, products, team) {
   this.label = label;
   this.schedule = schedule;
   this.products = products;
+  this.team = team;
+  this.prepareInventory = function () {
+    const deadlineAbility = this.team * 10 * this.checkDaytoSale();
+    const amountAllItems = this.products.reduce((total, item) => {
+      return total + item.amount;
+    }, 0);
+    return amountAllItems <= deadlineAbility;
+  };
+  this.checkDaytoSale = function () {
+    const restOfDays = new Date('07.22.2023').getTime() - Date.now();
+    return Math.round(restOfDays / 86400000);
+  };
   this.ellipsisText = function (text, maxLength) {
     return text.length <= maxLength ? text : `${text.slice(0, maxLength)}...`;
   };
@@ -76,6 +78,6 @@ function ProfileStore(label, schedule, products) {
     return mismatchedItems;
   };
 }
-const newStore = new ProfileStore('Market', '07:00 - 18:00', listItem);
+const newStore = new ProfileStore('Market', '07:00 - 18:00', listItem, 5);
 
-console.log(newStore.censorshipCheck('I would like to advertise my own made brick', 'like'));
+console.log(newStore.prepareInventory());
