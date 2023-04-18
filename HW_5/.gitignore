@@ -1,0 +1,4 @@
+.vscode/**/*
+*.xml
+*.imt
+.DS_store/**/*
