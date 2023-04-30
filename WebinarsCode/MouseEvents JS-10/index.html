@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .tabs__item {
+        margin: 10px 0;
+      }
+      .tabs__item--active {
+        background-color: rgb(120, 0, 0);
+        color: #f3f3f3;
+      }
+      .tabs-content__item {
+        display: none;
+      }
+      .tabs-content__item--active {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="btnsList">
+      <button id="clickMe">Click Me</button>
+      <button id="hitMe">Hit Me</button>
+      <button id="pushMe">Push Me</button>
+    </div>
+    <main class="container">
+      <ul class="tabs">
+        <li class="tabs__item tabs__item--active" data-tab="Gogi">1</li>
+        <li class="tabs__item" data-tab="Loves">2</li>
+        <li class="tabs__item" data-tab="To">3</li>
+        <li class="tabs__item" data-tab="Code">4</li>
+      </ul>
+      <div class="tabs-content">
+        <div
+          class="tabs-content__item tabs-content__item--active"
+          data-tab="Gogi"
+        >
+          #1Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+          tenetur nam laboriosam temporibus veritatis accusamus et. Quas
+          dignissimos maiores, expedita fugit autem ut cumque distinctio iusto,
+          itaque molestiae porro laboriosam. Lorem, ipsum dolor sit amet
+          consectetur adipisicing elit. Facere ad ratione aspernatur dolorem nam
+          esse commodi! Harum veniam eveniet eaque voluptatem, eius perferendis
+          necessitatibus similique blanditiis odio, esse veritatis sapiente!
+        </div>
+        <div class="tabs-content__item" data-tab="Loves">
+          #2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
+          nostrum dolorum nobis ab eos nihil labore repellendus itaque sed iste
+          quisquam error aliquam explicabo, iusto nesciunt vero modi commodi
+          dolorem.
+        </div>
+        <div class="tabs-content__item" data-tab="To">
+          #3 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis
+          natus neque dolore quis dolor temporibus non, aliquam doloribus
+          obcaecati eveniet sint corporis reprehenderit quo illum ex enim
+          eligendi animi est.
+        </div>
+        <div class="tabs-content__item" data-tab="Code">
+          #4 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet
+          ex doloribus necessitatibus, incidunt possimus suscipit obcaecati vel
+          aliquam corrupti ad, quia ipsa sequi nulla fuga quas, adipisci
+          ducimus. Nemo, optio.
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
