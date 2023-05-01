@@ -29,7 +29,8 @@ const waetherApp = (location, getNeighbours) => {
 
 // ######################################################################  TASK3  #########################################################################
 const isSpecialCharacter = (value) => {
-  return value.toLowerCase() === value.toUpperCase() ? true : false
+  // return value.toLowerCase() === value.toUpperCase()
+  
 }
 const removeSpecialCharacters = (url, isSpecialCharacter) => {
   let validatedUrl = '';
