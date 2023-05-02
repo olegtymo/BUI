@@ -16,15 +16,11 @@ const reverseArray = (array) => {
 };
 
 //#############################################################################################   TASK3   ##############################################################################
+
 let arr = [1, 3, 5, 7, 9, 11, 12];
 let arr2 = [1, 2, 3, 4, 5, 10, 12];
 
 const sortArr = (firstArray, secondArray) => {
-  const mergedArrays = [].concat(firstArray, secondArray).sort((a, b) => a - b);
-  const uniqArray = mergedArrays.reduce((uniq, item) => {
-    return uniq.includes(item) ? uniq : [...uniq, item]
-  }, []);
-  return uniqArray;
+  return firstArray.concat(secondArray).sort((a, b) => a - b);
 };
-
 console.log(sortArr(arr, arr2));
