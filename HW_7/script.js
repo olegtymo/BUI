@@ -1,26 +1,48 @@
-<<<<<<< HEAD
-const array = [
-  { title: 'item-1', description: 'some description...', price: 10 },
-  { title: 'item-2', description: 'some description...', price: 120 },
-  { title: 'item-3', description: 'some description...', price: 34 },
-  { title: 'item-4', description: 'some description...', price: 222 },
-  { title: 'item-5', description: 'some description...', price: 67 },
-  { title: 'item-6', description: 'some description...', price: 9 },
-];
+//#######################################################################################   TASK1   #######################################################################################
 
-const removeFromCart = (arr, titleName) => {
-  const refreshedArr = arr.filter((item) => {
-    return item.title !== titleName;
-  });
-  console.log('removeFromCart has been called');
-  return refreshedArr;
+const menuIcon = document.getElementById('menu-icon');
+const navigationList = document.querySelector('.navigation__list');
+menuIcon.addEventListener('click', (event) => {
+  navigationList.classList.toggle('navigation__list--active');
+});
+
+//#######################################################################################   TASK2   #######################################################################################
+const HTML = document.querySelector('html');
+const customCursor = document.querySelector('.root-cursor');
+HTML.style.cursor = 'none';
+HTML.addEventListener('mousemove', (e) => {
+  customCursor.style.left = e.x + 'px';
+  customCursor.style.top = e.y + 'px';
+});
+//#######################################################################################   TASK3   #######################################################################################
+const lettersContainer = document.querySelector('.title');
+const keyboardKeys = document.querySelectorAll('[data-value]');
+const matchingKeyCodeAndDataValue = {
+  Escape: 'esc',
+  Backspace: 'back',
+  CapsLock: 'caps',
+  ShiftLeft: 'left-shift',
+  ShiftRight: 'right-shift',
 };
-removeFromCart(array, 'item-1');
-=======
-// const burger = document.getElementById('burger');
-// const menu = document.getElementById('menu');
+const showLettersOnScreen = document.addEventListener('keydown', (e) => {
+  lettersContainer.textContent += `${e.key}`;
+  for (let i in matchingKeyCodeAndDataValue) {
+    if (i === e.code) {
+      const matchedElem = document.querySelector(
+        `[data-value = ${matchingKeyCodeAndDataValue[i]}]`,
+      );
 
-// burger.addEventListener('click', () => {
-//     menu.style.display = 'block'
-// })
->>>>>>> 888b19d6b3d82caeee07c00e87c94329ecdb21ef
+      matchedElem.classList.add('hit');
+      setTimeout(() => matchedElem.classList.remove('hit'), 70);
+    }
+  }
+  keyboardKeys.forEach((elem) => {
+    if (elem.dataset.value.toLowerCase() === e.key.toLowerCase()) {
+      if (elem.dataset.value === 'tab') {
+        e.preventDefault();
+      }
+      elem.classList.add('hit');
+      setTimeout(() => elem.classList.remove('hit'), 70);
+    }
+  });
+});
