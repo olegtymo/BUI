@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="trello-section">
+      <form class="form">
+        <h4 class="form__title">Створення картки</h4>
+        <input class="form__field" type="text" name="title" />
+        <select class="form__select" name="color">
+          <option class="form__select-option" value="зелений">зелений</option>
+          <option class="form__select-option" value="жовтий">жовтий</option>
+          <option class="form__select-option" value="червоний">червоний</option>
+        </select>
+        <button type="submit" class="form__submit">Створити картку</button>
+      </form>
+
+      <div class="trello-column">
+        <div class="trello-column__cell">1</div>
+      </div>
+      <button class="create-trello-btn"></button>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

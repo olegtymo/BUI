@@ -1,0 +1,27 @@
+.timer {
+  display: flex;
+  align-items: center;
+
+  width: 600px;
+  margin: 0 auto;
+  row-gap: 3px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+}
+
+#root_storage {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1000px;
+  margin: 50px auto;
+  row-gap: 50px;
+  font-family: sans-serif;
+}
+
+#root_storage > * {
+  width: 250px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
