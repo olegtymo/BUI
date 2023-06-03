@@ -17,18 +17,18 @@
  * - зробити так, щоб дні відображались на своїх місцях відносно днів тижня
  * - додати можливість "гортати" місяці
  */
-const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
 
 const classes = {
-  calendarGlobal: 'calendar',
-  calendarCellBox: 'calendar__item',
-  calendarDay: 'calendar__day',
-  calendarEvent: 'calendar__event',
+  calendarGlobal: "calendar",
+  calendarCellBox: "calendar__item",
+  calendarDay: "calendar__day",
+  calendarEvent: "calendar__event",
 };
 // import collection from './itemsCollection.js';
 
 function Calendar(classes, items = [], days) {
-  this.parent = document.querySelector('main');
+  this.parent = document.querySelector("main");
   this.days = days;
   this.classes = {
     calendarGlobal: classes.calendarGlobal,
@@ -37,19 +37,25 @@ function Calendar(classes, items = [], days) {
     calendarEvent: classes.calendarEvent,
   };
   this.elements = {
-    wrapper: document.createElement('section'),
-    itemCell: document.createElement('div'),
-    itemDay: document.createElement('p'),
-    itemEvent: document.createElement('p'),
+    wrapper: document.createElement("section"),
+    itemCell: document.createElement("div"),
+    itemDay: document.createElement("p"),
+    itemEvent: document.createElement("p"),
   };
   this.getIndexOfDateFromDate = () => {
-    const d = new Date();
-    const n = d.getDay();
+    const date = new Date();
+    const firstDayOfCurrentMonth = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      1
+    ).getDay();
+
+    return firstDayOfCurrentMonth;
   };
   this.renderOnlyDaysOfWeek = () => {
     for (let i of this.days) {
-      const cell = document.createElement('div');
-      const day = document.createElement('p');
+      const cell = document.createElement("div");
+      const day = document.createElement("p");
       cell.className = this.classes.calendarCell;
       day.className = this.classes.calendarDay;
       day.innerText = `${i}`;
@@ -58,16 +64,26 @@ function Calendar(classes, items = [], days) {
     }
   };
   this.renderOnlyDates = () => {
+    const indexOfFirstDay = this.getIndexOfDateFromDate();
+
     const currentDate = new Date();
     const daysInCurrentMonth = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() + 1,
-      0,
+      0
     ).getDate();
 
+    for (let i = 1; i < indexOfFirstDay; i++) {
+      const cell = document.createElement("div");
+      const day = document.createElement("p");
+      cell.className = this.classes.calendarCell;
+      day.className = this.classes.calendarDay;
+      cell.append(day);
+      this.elements.wrapper.append(cell);
+    }
     for (let i = 1; i <= daysInCurrentMonth; i++) {
-      const cell = document.createElement('div');
-      const day = document.createElement('p');
+      const cell = document.createElement("div");
+      const day = document.createElement("p");
       cell.className = this.classes.calendarCell;
       day.className = this.classes.calendarDay;
       day.innerText = `${i}`;
@@ -85,3 +101,4 @@ function Calendar(classes, items = [], days) {
 
 const newCal = new Calendar(classes, [], days);
 newCal.render();
+// console.log(newCal.getIndexOfDateFromDate());
