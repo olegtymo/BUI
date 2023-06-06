@@ -37,16 +37,24 @@ main {
 
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
 }
-
-.calendar {
+.calendar{
+display: flex;
+flex-direction: column;
+}
+.calendar__form{
+  display: flex;
+    flex-direction: column;
+}
+.calendar__itemsWrapper {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-auto-rows: 5rem;
   gap: 0.5em;
 }
 
-.calendar__item {
+.calendar__itemsWrapper__item {
   display: flex;
+  overflow-x: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -55,13 +63,15 @@ main {
   background-color: #eee;
 }
 
-.calendar__day {
+.calendar__itemsWrapper__day {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.calendar__event {
+.calendar__itemsWrapper__event {
   border-radius: 5px;
+  display: inline-block;
+  
   padding: 0.5rem;
   background-color: teal;
   color: white;
