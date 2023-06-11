@@ -19,11 +19,11 @@ import API from "./CalendarAPI.js";
  * - додати можливість "гортати" місяці
  */
 
-API.createEvent({
-  id: Date.now(),
-  title: "sobaka dyka",
-  date: "25-06-2023",
-});
+// API.createEvent({
+//   id: Date.now(),
+//   title: "sobaka dyka",
+//   date: "25-06-2023",
+// });
 
 const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
 
@@ -71,10 +71,9 @@ function Calendar(classes, items = [], days) {
     return firstDayOfCurrentMonth;
   };
   this.renderOnlyForm = () => {
-    // this.elements.dateInput.placeholder = "Type date in";
-
     this.elements.form.className = this.classes.calendarForm;
     this.elements.dateInput.type = "date";
+    this.elements.dateInput.addEventListener("change", this.enableBtn);
     this.elements.eventInput.placeholder = "Type event in";
     this.elements.eventInput.addEventListener("keyup", this.enableBtn);
     this.elements.addEventBtn.textContent = "Add Event";
@@ -106,16 +105,24 @@ function Calendar(classes, items = [], days) {
     const timeStampToMs = timeStamp.getTime();
     const targetDay = document.querySelector(`[data-date='${timeStampToMs}']`);
 
-    const eventElem = document.createElement("p");
-    eventElem.textContent = this.elements.eventInput.value;
-    eventElem.className = this.classes.calendarEvent;
-    targetDay.append(eventElem);
-    if (localStorage.getItem(`${this.elements.dateInput.value}`)) {
-    }
-    localStorage.setItem(
-      this.elements.dateInput.value,
-      JSON.stringify([this.elements.eventInput.value])
-    );
+    const closeBtnDOM = document.createElement("div");
+    const eventDOM = document.createElement("div");
+    closeBtnDOM.classList.add("closeBtn");
+    eventDOM.textContent = this.elements.eventInput.value;
+    eventDOM.className = this.classes.calendarEvent;
+    eventDOM.addEventListener("click", (e) => {
+      if (e.target.matches(".calendar__itemsWrapper__event:hover .closeBtn")) {
+        API.removeEvent(elem.id);
+        e.currentTarget.style.display = "none";
+      }
+    });
+    eventDOM.append(closeBtnDOM);
+    targetDay.append(eventDOM);
+    API.createEvent({
+      id: Date.now(),
+      title: this.elements.eventInput.value,
+      date: this.elements.dateInput.value,
+    });
 
     this.elements.dateInput.value = "";
     this.elements.eventInput.value = "";
@@ -125,6 +132,7 @@ function Calendar(classes, items = [], days) {
       const cell = document.createElement("div");
       const day = document.createElement("p");
       cell.className = this.classes.calendarCell;
+      cell.classList.add("hoverOff");
       day.className = this.classes.calendarDay;
       day.innerText = `${i}`;
       cell.append(day);
@@ -156,23 +164,55 @@ function Calendar(classes, items = [], days) {
       cell.className = this.classes.calendarCell;
       cell.dataset.date = this.getTimeStamp(i);
       day.className = this.classes.calendarDay;
+      const currentTimeStamp = this.getTimeStamp(i);
+      const formatedCurrentDate = this.formatDate(currentTimeStamp);
 
       day.innerText = `${i}`;
       cell.append(day);
+      if (this.findEventFromLS(formatedCurrentDate)) {
+        API.readDay(formatedCurrentDate).forEach((elem) => {
+          const eventDOM = document.createElement("div");
+          const closeBtnDOM = document.createElement("div");
+          eventDOM.className = this.classes.calendarEvent;
+          closeBtnDOM.classList.add("closeBtn");
+
+          eventDOM.textContent = elem.title;
+          eventDOM.append(closeBtnDOM);
+
+          closeBtnDOM.addEventListener("click", (e) => {
+            API.removeEvent(elem.id);
+            eventDOM.style.display = "none";
+          });
+          cell.append(eventDOM);
+        });
+      }
       this.elements.wrapper.append(cell);
     }
   };
+
+  this.findEventFromLS = (event) => {
+    const dateFromLS = Object.keys(API.read()).find((ev) => {
+      return ev === event;
+    });
+    return dateFromLS;
+  };
+
+  this.formatDate = (timestamp) => {
+    let time = new Date(timestamp);
+    return `${time.getFullYear()}-${(time.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${time.getDate().toString().padStart(2, "0")}`;
+  };
   this.render = () => {
     this.elements.calendar.className = this.classes.calendarGlobal;
-    console.log(this.classes.calendarGlobal);
 
     this.elements.wrapper.className = this.classes.calendarItemWrapper;
     this.elements.calendar.append(this.elements.wrapper);
 
     this.renderOnlyDaysOfWeek();
     this.renderOnlyDates();
-
     this.parent.append(this.elements.calendar);
+
     this.renderOnlyForm();
   };
 }
